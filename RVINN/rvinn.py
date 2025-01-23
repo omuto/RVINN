@@ -73,9 +73,6 @@ class Model():
         # user assumptions
         self.init_steady_loss = kwargs.get('init_steady', False)
         self.init_data_loss = kwargs.get('init_data', False)
-        
-        #An experimental setting
-        self.second_derivative_constraint = kwargs.get('second_derivative', False)  ##default is False (first order derivatives for auxiliary loss)
 
         # normalized real data or not
         # default is normalized real data
@@ -130,7 +127,6 @@ class Model():
 
             print(f"init_steady is set to: {self.init_steady_loss}")
             print(f"init_data is set to: {self.init_data_loss}")
-            print(f"second_derivative_constraint is set to: {self.second_derivative_constraint}")
         else:
             pass
 
@@ -194,14 +190,7 @@ class Model():
         f_Sp = Sp_t - (k2*Un - k3*Sp)
         f_Un = Un_t - (k1 - k2*Un)
 
-        if self.second_derivative_constraint:
-            k2_tt = torch.autograd.grad(k2_t, t,
-                                        grad_outputs=torch.ones_like(k2_t),
-                                        retain_graph=True,
-                                        create_graph=True)[0]
-            return f_Sp, f_Un, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t, k2_tt
-        else:
-            return f_Sp, f_Un, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t 
+        return f_Sp, f_Un, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t 
     
 
 
@@ -209,11 +198,8 @@ class Model():
 
     def loss_func(self):
         Sp_pred, Un_pred = self.net_u(self.t_train)
-
-        if self.second_derivative_constraint:
-            Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t, k2_tt = self.net_f(self.t_f)
-        else:
-            Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t = self.net_f(self.t_f)
+        
+        Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t = self.net_f(self.t_f)
 
         sa_ODE = self.SA_ODE()
         sa_AUX = self.SA_AUX()
@@ -225,11 +211,8 @@ class Model():
         loss_ODE = sa_ODE*torch.mean(Sp_f**2) + sa_ODE*torch.mean(Un_f**2)
         if self.init_steady_loss:
             loss_ODE += sa_ODE*torch.mean((k1[0] - k2[0]*Un_pred[0])**2) + sa_ODE*torch.mean((k2[0]*Un_pred[0] - k3[0]*Sp_pred[0])**2)
-
-        if self.second_derivative_constraint:
-            loss_AUXILIARY = sa_AUX*torch.mean(torch.abs(k2_tt))
-        else:
-            loss_AUXILIARY = sa_AUX*torch.mean(torch.abs(k2_t))
+            
+        loss_AUXILIARY = sa_AUX*torch.mean(torch.abs(k2_t))
 
         lambda_ODE = torch.min(sa_ODE)
         lambda_AUX = torch.min(sa_AUX)
@@ -269,10 +252,8 @@ class Model():
         nIter = self.Adam_max
         for epoch in range(nIter):
             Sp_pred, Un_pred = self.net_u(self.t_train)
-            if self.second_derivative_constraint:
-                Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t, k2_tt = self.net_f(self.t_f)
-            else:
-                Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t = self.net_f(self.t_f)
+            
+            Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t = self.net_f(self.t_f)
 
             sa_ODE = self.SA_ODE()
             sa_AUX = self.SA_AUX()
@@ -285,10 +266,7 @@ class Model():
             if self.init_steady_loss:
                 loss_ODE += sa_ODE*torch.mean((k1[0] - k2[0]*Un_pred[0])**2) + sa_ODE*torch.mean((k2[0]*Un_pred[0] - k3[0]*Sp_pred[0])**2)
             
-            if self.second_derivative_constraint:
-                loss_AUXILIARY = sa_AUX*torch.mean(torch.abs(k2_tt))
-            else:
-                loss_AUXILIARY = sa_AUX*torch.mean(torch.abs(k2_t))
+            loss_AUXILIARY = sa_AUX*torch.mean(torch.abs(k2_t))
 
 
             lambda_ODE = torch.min(sa_ODE)
@@ -338,10 +316,7 @@ class Model():
         self.NN_k23.eval()
         Sp, Un = self.net_u(t)
         k1, k2, k3 = self.net_ks(t)
-        if self.second_derivative_constraint:
-            Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t, k2_tt = self.net_f(t)
-        else:
-            Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t = self.net_f(t)
+        Sp_f, Un_f, k1, k2, k3, Sp_t, Un_t, k1_t, k2_t, k3_t = self.net_f(t)
         Sp = Sp.detach().cpu().numpy()
         Un = Un.detach().cpu().numpy()
         k1 = k1.detach().cpu().numpy()
