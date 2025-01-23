@@ -65,6 +65,6 @@ class SelfAdaptiveWeight(torch.nn.Module):
         self.weight = torch.nn.Parameter(self.init_value * torch.ones(1))
 
     def forward(self):
-        # Apply gradient reversal to the weights
+        # Apply gradient reversal to the weights for gradient ascent
         weight = self.grad_reverse(self.weight)
         return weight
