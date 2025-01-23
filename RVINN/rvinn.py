@@ -73,7 +73,9 @@ class Model():
         # user assumptions
         self.init_steady_loss = kwargs.get('init_steady', False)
         self.init_data_loss = kwargs.get('init_data', False)
-        self.second_derivative_constraint = kwargs.get('second_derivative', False) # linear splicing rate 
+        
+        #An experimental setting
+        self.second_derivative_constraint = kwargs.get('second_derivative', False)  ##default is False (first order derivatives for auxiliary loss)
 
         # normalized real data or not
         # default is normalized real data
