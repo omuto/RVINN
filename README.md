@@ -1,5 +1,5 @@
 # RVINN
-**Installation guide is under construction.**
+**Installation guide is under construction (2025/01/30).**
 ![result](https://github.com/omuto/RVINN/blob/main/model_overview_.png)
 Model overview
 
