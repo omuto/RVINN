@@ -15,7 +15,6 @@ class Model():
         self.unspliced_train = torch.tensor(kwargs.get('unspliced_train'), requires_grad=False).float().to(self.device)
 
         # neural networks from rvinn modules.py
-
         self.config = kwargs.get('config', None)
         if self.config:
             # load user settings
@@ -92,7 +91,7 @@ class Model():
 
         total_params = params + params_SA 
 
-        #history
+        # history
         self.history = {
             'loss': [],
             'loss_DATA': [],
@@ -101,11 +100,11 @@ class Model():
             'lambda_ODE': [],
             'lambda_AUX': [],
             }
+        
+        # optimizer
+        self.optimizer_Adam = torch.optim.Adam(params=total_params)
+        self.iter = 0
 
-
-        self.optimizer_SA_ODE = torch.optim.Adam(params = params_SA_ODE, lr = self.Adam_lr)
-        self.optimizer_SA_AUX = torch.optim.Adam(params = params_SA_AUX, lr = self.Adam_lr)
-        # optimizers: using the same settings
         self.optimizer_Total = torch.optim.LBFGS(
             total_params,
             lr = self.LBFGS_lr,
@@ -114,11 +113,11 @@ class Model():
             history_size = 10,
             tolerance_grad = 1e-5,
             tolerance_change = 1.0 * np.finfo(float).eps,
-            line_search_fn = "strong_wolfe"       # can be "strong_wolfe"
+            line_search_fn = "strong_wolfe"   
         )
 
-        self.optimizer_Adam = torch.optim.Adam(params=total_params)
-        self.iter = 0
+        self.optimizer_SA_ODE = torch.optim.Adam(params = params_SA_ODE, lr = self.Adam_lr)
+        self.optimizer_SA_AUX = torch.optim.Adam(params = params_SA_AUX, lr = self.Adam_lr)
 
         if self.print_config:
             print("Model configuration:")
@@ -132,8 +131,8 @@ class Model():
 
     def net_u(self, t):
         STATE = self.NN(t)
-        Sp = STATE[:,0:1] #Tensor = [Timepoints, 1]
-        Un = STATE[:,1:2] #Tensor = [Timepoints, 1]
+        Sp = STATE[:,0:1] # Tensor = [Timepoints, 1]
+        Un = STATE[:,1:2] # Tensor = [Timepoints, 1]
         if self.normalization:
             Sp = torch.nn.functional.sigmoid(Sp) # should be positive and capped at 1 
             Un = torch.nn.functional.sigmoid(Un) # should be positive and capped at 1 
@@ -145,8 +144,8 @@ class Model():
     def net_ks(self,t):
         k1 = self.NN_k1(t)
         ks = self.NN_k23(t)
-        k2 = ks[:,0:1] #Tensor = [Timepoints, 1]
-        k3 = ks[:,1:2] #Tensor = [Timepoints, 1]
+        k2 = ks[:,0:1] # Tensor = [Timepoints, 1]
+        k3 = ks[:,1:2] # Tensor = [Timepoints, 1]
         k1 = torch.nn.functional.softplus(k1) # should be positive
         k2 = torch.nn.functional.softplus(k2) # should be positive
         k3 = torch.nn.functional.softplus(k3) # should be positive
@@ -218,11 +217,11 @@ class Model():
         lambda_AUX = torch.min(sa_AUX)
         loss = loss_DATA + loss_ODE + loss_AUXILIARY
 
-        self.optimizer_SA_ODE.zero_grad() #Adam to LBFGS
-        self.optimizer_SA_AUX.zero_grad() #Adam to LBFGS
-
-        self.optimizer_Total.zero_grad() #Adam to LBFGS
+        self.optimizer_SA_ODE.zero_grad() 
+        self.optimizer_SA_AUX.zero_grad()
+        self.optimizer_Total.zero_grad() 
         loss.backward()
+
         self.history['loss'].append(loss.item())
         self.history['loss_DATA'].append(loss_DATA.item())
         self.history['loss_ODE'].append(loss_ODE.item())
@@ -244,8 +243,6 @@ class Model():
                      self.iter
                  )
                   )
-              print(k1.shape)
-              print(Sp_f.shape)
         return loss
 
     def train(self):
@@ -272,6 +269,7 @@ class Model():
             lambda_ODE = torch.min(sa_ODE)
             lambda_AUX = torch.min(sa_AUX)
             loss = loss_DATA + loss_ODE + loss_AUXILIARY
+
             # history
             self.history['loss'].append(loss.item())
             self.history['loss_DATA'].append(loss_DATA.item())
@@ -281,11 +279,10 @@ class Model():
             self.history['lambda_AUX'].append(lambda_AUX.item())
 
             # Backward and optimize
-
-            self.optimizer_SA_ODE.zero_grad() ## added
-            self.optimizer_SA_AUX.zero_grad() ## added
-
+            self.optimizer_SA_ODE.zero_grad() 
+            self.optimizer_SA_AUX.zero_grad() 
             self.optimizer_Adam.zero_grad()
+
             loss.backward()
             self.optimizer_Adam.step()
 
@@ -302,10 +299,8 @@ class Model():
                         epoch
                         )
                         )
-        print(k1_t.shape)
-        print(Sp_f.shape)
         # Backward and optimize
-        self.optimizer_Total.step(self.loss_func)
+        self.optimizer_Total.step(self.loss_func) #Adam to LBFGS
 
     def predict(self, t):
         # prediction time window to torch.tensor
