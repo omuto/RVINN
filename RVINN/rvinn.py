@@ -224,8 +224,8 @@ class Model():
 
         self.history['loss'].append(loss.item())
         self.history['loss_DATA'].append(loss_DATA.item())
-        self.history['loss_ODE'].append(loss_ODE.item())
-        self.history['loss_AUXILIARY'].append(loss_AUXILIARY.item())
+        self.history['loss_ODE'].append(loss_ODE.item()/lambda_ODE.item())
+        self.history['loss_AUXILIARY'].append(loss_AUXILIARY.item()/lambda_AUX.item())
         self.history['lambda_ODE'].append(lambda_ODE.item())
         self.history['lambda_AUX'].append(lambda_AUX.item())
 
@@ -236,8 +236,8 @@ class Model():
                  (
                      loss.item(),
                      loss_DATA.item(),
-                     loss_ODE.item(),
-                     loss_AUXILIARY.item(),
+                     loss_ODE.item()/lambda_ODE.item(),
+                     loss_AUXILIARY.item()/lambda_AUX.item(),
                      lambda_ODE.item(),
                      lambda_AUX.item(),
                      self.iter
@@ -273,8 +273,8 @@ class Model():
             # history
             self.history['loss'].append(loss.item())
             self.history['loss_DATA'].append(loss_DATA.item())
-            self.history['loss_ODE'].append(loss_ODE.item())
-            self.history['loss_AUXILIARY'].append(loss_AUXILIARY.item())
+            self.history['loss_ODE'].append(loss_ODE.item()/lambda_ODE.item())
+            self.history['loss_AUXILIARY'].append(loss_AUXILIARY.item()/lambda_AUX.item())
             self.history['lambda_ODE'].append(lambda_ODE.item())
             self.history['lambda_AUX'].append(lambda_AUX.item())
 
@@ -292,8 +292,8 @@ class Model():
                         (
                         loss.item(),
                         loss_DATA.item(),
-                        loss_ODE.item(),
-                        loss_AUXILIARY.item(),
+                        loss_ODE.item()/lambda_ODE.item(),
+                        loss_AUXILIARY.item()/lambda_AUX.item(),
                         lambda_ODE.item(),
                         lambda_AUX.item(),
                         epoch
