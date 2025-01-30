@@ -4,9 +4,9 @@ import os
 
 def load_target(gene: str, df_Sp: pd.DataFrame, df_Un: pd.DataFrame, n_replicates: int) -> tuple:
     assert type(n_replicates) == int, "n_replicates must be an integer."
-    Sp_new_star = df_Sp.loc[gene].to_numpy(dtype=np.float64).reshape(n_replicates, -1).T
-    Un_new_star = df_Un.loc[gene].to_numpy(dtype=np.float64).reshape(n_replicates, -1).T
-    return Sp_new_star, Un_new_star
+    Sp_star = df_Sp.loc[gene].to_numpy(dtype=np.float64).reshape(n_replicates, -1).T
+    Un_star = df_Un.loc[gene].to_numpy(dtype=np.float64).reshape(n_replicates, -1).T
+    return Sp_star, Un_star
 
 def load_observation_period(experimental_timepoints_list: list):
     assert type(experimental_timepoints_list) == list, "experimental_timepoints_list must be a list."
@@ -14,9 +14,9 @@ def load_observation_period(experimental_timepoints_list: list):
     t_star = np.array(experimental_timepoints_list, dtype=np.float64).reshape(-1,1)
     end_min = int(np.max(t_star))
     start_min = int(np.min(t_star))
-    """ Collocation points be generated in every minute """
+    """ Collocation points are generated in every minute """
     t_f = np.linspace(start_min, end_min, (end_min - start_min) + 1).reshape(-1,1)
-    """ Input values for NN are in hours """
+    """ Input values for NN (in hours) """
     t_star /= 60
     t_f /= 60
     assert np.max(t_star) == np.max(t_f), "The endpoint of t_star and t_f must be equal."
