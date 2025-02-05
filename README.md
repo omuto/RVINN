@@ -1,8 +1,7 @@
 # RVINN
 
-**Uploaded MCF7 data (2025/01/30).**
+**Uploaded data and quick demo.**
 
-**Uploaded quick demo (2025/02/04).**
 ![result](https://github.com/omuto/RVINN/blob/main/model_overview_.png)
 Model overview
 
