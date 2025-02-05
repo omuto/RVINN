@@ -2,8 +2,8 @@
 
 **Uploaded data and quick demo.**
 
-![result](https://github.com/omuto/RVINN/blob/main/model_overview_.png)
+<img src="https://github.com/omuto/RVINN/blob/main/data/model_overview_.png" width="500px" align="center">
 Model overview
 
-![result](https://github.com/omuto/RVINN/blob/main/Transcriptional_Ripple_animation.gif)
+<img src="https://github.com/omuto/RVINN/blob/main/data/Transcriptional_Ripple_animation.gif" width="300px" align="left">
 Transcriptional Ripple (Lag-shifted animation)
