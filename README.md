@@ -18,10 +18,10 @@ RVINN requires the following dependencies:
 
 Currently, RVINN has been verified to run on **CPU**.
 
-If PyTorch is not installed, please refer to the official installation guide below:
+If PyTorch is not installed, please refer to the official installation guide:
 [PyTorch Installation Guide](https://pytorch.org/get-started/locally/)
 
-## Installation
+## Installation (RVINN)
 
 ```console
 pip install git+https://github.com/omuto/RVINN
