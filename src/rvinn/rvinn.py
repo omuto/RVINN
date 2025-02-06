@@ -3,7 +3,7 @@ import torch.nn.functional
 import numpy as np
 import matplotlib.pyplot as plt
 
-import modules # rvinn modules.py
+from . import modules # rvinn modules.py
 
 class Model():
     def __init__(self, device, **kwargs):

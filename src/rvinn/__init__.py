@@ -1,2 +1,2 @@
-from . import modules
+from . import rvinn
 from . import train
