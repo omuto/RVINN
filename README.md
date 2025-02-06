@@ -16,8 +16,6 @@ RVINN requires the following dependencies:
 - **Python** 3.8 or later
 - **PyTorch** 2.0.0 or later
 
-Currently, RVINN has been verified to run on **CPU**.
-
 If PyTorch is not installed, please refer to the official installation guide:
 [PyTorch Installation Guide](https://pytorch.org/get-started/locally/)
 
