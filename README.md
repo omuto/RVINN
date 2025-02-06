@@ -4,15 +4,15 @@
 
 <div style="display: flex; align-items: cneter; justify-content: space-between;">
   <!-- Model Overview -->
-  <figure style="text-align: center; margin-right: 20px;">
-    <img src="https://github.com/omuto/RVINN/blob/main/readme_fig/model_overview_.png" alt="Model Overview" style="width: 300px;">
-    <figcaption>Model Overview</figcaption>
+  <figure style="text-align: left; margin-right: 10px;">
+    <figcaption style="margin-bottom: 5px;">Model Overview</figcaption>
+    <img src="https://github.com/omuto/RVINN/blob/main/readme_fig/model_overview_.png" alt="Model Overview" style="width: 500px;">
   </figure>
 
   <!-- Transcriptional Ripple  -->
-  <figure style="text-align: center;">
+  <figure style="text-align: left;">
+    <figcaption style="margin-bottom: 5px;">Transcriptional Ripple</figcaption>
     <img src="https://github.com/omuto/RVINN/blob/main/readme_fig/Transcriptional_Ripple_animation.gif" alt="Transcriptional Ripple" style="width: 300px;">
-    <figcaption>Lag-shifted animation</figcaption>
   </figure>
 </div>
 
