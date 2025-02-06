@@ -2,12 +2,19 @@
 
 **Uploaded data and quick demo.**
 
-<table>
-  <tr>
-    <td><img src="https://github.com/omuto/RVINN/blob/main/readme_fig/model_overview_.png" alt="Model Overview" width="500px"></td>
-    <td><img src="https://github.com/omuto/RVINN/blob/main/readme_fig/Transcriptional_Ripple_animation.gif" alt="Transcriptional Ripple" width="300px"></td>
-  </tr>
-</table>
+<div style="display: flex; align-items: flex-start; justify-content: space-between;">
+  <!-- Model Overview -->
+  <figure style="text-align: center; margin-right: 20px;">
+    <img src="https://github.com/omuto/RVINN/blob/main/readme_fig/model_overview_.png" alt="Model Overview" style="width: 500px;">
+    <figcaption>Model Overview</figcaption>
+  </figure>
+
+  <!-- Transcriptional Ripple  -->
+  <figure style="text-align: center;">
+    <img src="https://github.com/omuto/RVINN/blob/main/readme_fig/Transcriptional_Ripple_animation.gif" alt="Transcriptional Ripple" style="width: 300px;">
+    <figcaption>Lag-shifted animation</figcaption>
+  </figure>
+</div>
 
 ## Installation
 
