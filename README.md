@@ -1,5 +1,7 @@
 # RVINN
+**RNA Velocity-Informed Neural Networks (RVINN)** is a Physics-Informed Neural Network (PINN) framework for modeling mRNA dynamics and inferring transcriptional and post-transcriptional regulation.
 
+---
 **Uploaded data and quick demo.**
 
 <figure style="text-align: center;">
@@ -10,6 +12,9 @@
   <figcaption style="margin-bottom: 5px;">Transcriptional Ripple</figcaption>
   <img src="https://github.com/omuto/RVINN/blob/main/readme_fig/Transcriptional_Ripple_animation.gif" alt="Transcriptional Ripple" style="width: 30%;">
 </figure>
+
+## 🔬 Demonstration for Downstream Analysis
+[ISMB2025](https://github.com/omuto/ismb2025_rvinn_downstream_analysis)
 
 ## Requirements
 RVINN requires the following dependencies:
