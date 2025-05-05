@@ -89,6 +89,21 @@ def save_results(gene: str, save_results_to: str, Sp_e, Un_e, k1_e, k2_e, k3_e, 
     np.save(f'{save_results_to}Sp_t_mean_{gene}.npy', Sp_t_e.mean(axis=1))
     np.save(f'{save_results_to}Un_t_mean_{gene}.npy', Un_t_e.mean(axis=1))
 
+def save_mean_std_results(gene: str, save_results_to: str, Sp_e, Un_e, k1_e, k2_e, k3_e):
+    
+    # Mean and standard deviation 
+    np.save(f'{save_results_to}k1_mean_{gene}.npy', k1_e.mean(axis=1))
+    np.save(f'{save_results_to}k2_mean_{gene}.npy', k2_e.mean(axis=1))
+    np.save(f'{save_results_to}k3_mean_{gene}.npy', k3_e.mean(axis=1))
+    np.save(f'{save_results_to}Sp_mean_{gene}.npy', Sp_e.mean(axis=1))
+    np.save(f'{save_results_to}Un_mean_{gene}.npy', Un_e.mean(axis=1))
+
+    np.save(f'{save_results_to}k1_std_{gene}.npy', k1_e.std(axis=1))
+    np.save(f'{save_results_to}k2_std_{gene}.npy', k2_e.std(axis=1))
+    np.save(f'{save_results_to}k3_std_{gene}.npy', k3_e.std(axis=1))
+    np.save(f'{save_results_to}Sp_std_{gene}.npy', Sp_e.std(axis=1))
+    np.save(f'{save_results_to}Un_std_{gene}.npy', Un_e.std(axis=1))
+
 def load_avg_results(gene: str, save_results_to: str):
     # Load the estimated dynamics
     Sp_arr = np.load(f'{save_results_to}Sp_mean_{gene}.npy')
