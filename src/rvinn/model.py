@@ -76,6 +76,9 @@ class Model():
         # normalized real data or not
         # default is normalized real data
         self.normalization = kwargs.get('normalization', True)
+
+        # print loss verbose option
+        self.verbose = kwargs.get('loss_verbose', True)
         
         # self-adaptive weight
         self.SA_ODE = modules.SelfAdaptiveWeight(self.SA_ODE_init).to(self.device) # must be float
@@ -230,7 +233,7 @@ class Model():
         self.history['lambda_AUX'].append(lambda_AUX.item())
 
         self.iter += 1
-        if self.iter % 100 == 0:
+        if (self.iter % 100 == 0) and self.verbose:
               print(
                  'Loss: %.5f, Loss_DATA: %.5f, Loss_ODE: %.5f, Loss_AUX: %.5f, lambda_ODE: %.5f, lambda_AUX: %.5f, LBFGS_Itr: %d' %
                  (
@@ -286,7 +289,7 @@ class Model():
             loss.backward()
             self.optimizer_Adam.step()
 
-            if epoch % 100 == 0:
+            if (epoch % 100 == 0) and self.verbose:
                 print(
                     'Loss: %.5f, Loss_DATA: %.5f, Loss_ODE: %.5f, Loss_AUX: %.5f, lambda_ODE: %.5f, weight_AUX: %.5f, Adam_Itr: %d' %
                         (
