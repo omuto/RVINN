@@ -34,5 +34,6 @@ If PyTorch is not installed, please refer to the official installation guide:
 pip install git+https://github.com/omuto/RVINN
 ```
 
-[Quick demo](https://github.com/omuto/RVINN/blob/main/demo/rvinn_demo.ipynb)
+A Jupyter notebook–formatted demo is available here:
+[rvinn_demo.ipynb](https://github.com/omuto/RVINN/blob/main/demo/rvinn_demo.ipynb)
 
