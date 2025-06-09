@@ -34,7 +34,7 @@ If PyTorch is not installed, please refer to the official installation guide:
 pip install git+https://github.com/omuto/RVINN
 ```
 
-A Jupyter notebook–formatted demo is available here:
+A quick demo is available here:
 [demo](https://github.com/omuto/RVINN/blob/main/demo/rvinn_demo.ipynb)
 
 A simple example for local parallel execution is provided here:
