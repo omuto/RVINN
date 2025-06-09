@@ -35,5 +35,7 @@ pip install git+https://github.com/omuto/RVINN
 ```
 
 A Jupyter notebook–formatted demo is available here:
-[rvinn_demo.ipynb](https://github.com/omuto/RVINN/blob/main/demo/rvinn_demo.ipynb)
+[demo](https://github.com/omuto/RVINN/blob/main/demo/rvinn_demo.ipynb)
 
+A simple example for local parallel execution is provided here:
+[parallelization](https://github.com/omuto/RVINN/blob/main/demo/parallelization_demo.ipynb)
